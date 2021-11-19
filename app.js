@@ -12,7 +12,7 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 
 mongoose
-  .connect(process.env.db_url, {
+  .connect(process.env.MONGODB_URI || process.env.db_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -24,6 +24,8 @@ mongoose
   });
 
 app.use("/api", require("./routes/index"));
+
+// app.use(express.static(path.join(__dirname,"./client/build")))
 
 if (process.env.NODE_ENV == "production") {
   app.use(express.static("client/build"));
